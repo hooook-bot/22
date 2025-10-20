@@ -1,0 +1,8 @@
+Total Cases = 
+COALESCE(
+    CALCULATE(
+        COUNT('incident'[Case Id]),
+        'incident'[statuscode] <> 877210001
+    ),
+    0
+)
