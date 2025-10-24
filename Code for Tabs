@@ -1,0 +1,139 @@
+// Show or hides Tabs Based on Case Sub Type.
+    showCustomerTabForSpecificSubTypes: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var selectedCaseSubType = formContext.getAttribute("nwb_case_sub_type").getValue();
+        var selectedCaseSubTypeGUID = "";
+    
+        if (selectedCaseSubType && selectedCaseSubType[0]) {
+            selectedCaseSubTypeGUID = selectedCaseSubType[0].id.replace(/[{}]/g, "").toLowerCase();
+        }
+    
+        // Helper function to set visibility for a given tab and its associated GUIDs
+        var setTabVisibility = function (tabName, validGuids) {
+            var tab = formContext.ui.tabs.get(tabName);
+            if (tab) {
+                tab.setVisible(validGuids.includes(selectedCaseSubTypeGUID));
+            }
+        };
+    
+        // Tab Visibility Logic
+    
+        // 1. Customer Details Tab (Original List)
+        setTabVisibility("Customer_Details_Tab", [
+            "39b61997-6cef-ef11-9342-000d3a7f76f1", // Technical Query
+            "3ab61997-6cef-ef11-9342-000d3a7f76f1", // Suppression
+            "66352498-6cef-ef11-9341-6045bdd10c2d", // Standards Review
+            "0e1e1393-6cef-ef11-9341-6045bdd1de21", // Sanctioned Country/Region Advice
+            "d5bb24c4-11t0-et11-9341-6045bdd10c2d", // Review of Sensitive DAMLs/DATFs
+            "6b352498-6cef-ef11-9341-6045bdd10c2d", // Quantexa Alert
+            "6a352498-6cef-ef11-9341-6045bdd10c2d", // PSQ Review
+            "53352498-6cef-ef11-9341-6045bdd10c2d", // Product Retirement
+            "251e1393-6cef-ef11-9341-6045bdd1de21", // Potential Breach Trade Referral
+            "6b312792-6cef-ef11-9341-6045bdd10c2d", // Potential Breach Trade Referral
+            "40b61997-6cef-ef11-9342-000d3a7f76f1", // Policy/Process Query
+            "221e1393-6cef-ef11-9341-6045bdd1de21", // Policy Update
+            "041e1393-6cef-ef11-9341-6045bdd1de21", // Payment Pre-Approval
+            "2db61997-6cef-ef11-9342-000d3a7f76f1", // Ongoing Approval (OGA)
+            "60352498-6cef-ef11-9341-6045bdd10c2d", // New/Amended Language
+            "4f352498-6cef-ef11-9341-6045bdd10c2d", // New Product Development
+            "101e1393-6cef-ef11-9341-6045bdd1de21", // New Process Review
+            "ce3647c1-11f0-ef11-9342-000d3a7f76f1", // Management of Customer Risk during DAML Freeze
+            "ба312792-6cef-ef11-9341-6045bdd10c2d", // Licence Query/Revalidation
+            "ca375f93-6cef-ef11-9342-6045bdd069cd", // KYC Referral
+            "171e1393-6cef-ef11-9341-6045bdd1de21", // Issue
+            "ddbb24c4-11f0-ef11-9341-6045bdd10c2d", // Investigation Escalation, This one, Investigation_Escalation_Tab
+            "d8375f93-6cef-ef11-9342-6045bdd069cd", // Internal Process Review
+            "cb3647c1-11f0-ef11-9342-000d3a7f76f1", // Immediate Exit
+            "6c352498-6cef-ef11-9341-6045bdd10c2d", // General Sanctions Query - Trade Referral
+            "32352498-6cef-ef11-9341-6045bdd10c2d", // General Sanctions Advice
+            "3eb61997-6cef-ef11-9342-000d3a7f76f1", // General Clause Query - Sanctions Clause
+            "151e1393-6cef-ef11-9341-6045bdd1de21", // GAP
+            "2ab61997-6cef-ef11-9342-000d3a7f76f1", // Freezing Requirement
+            "cd375f93-6cef-ef11-9342-6045bdd069cd", // Exit Referral
+            "d9375f93-6cef-ef11-9342-6045bdd069cd", // Exception to Policy
+            "61352498-6cef-ef11-9341-6045bdd10c2d", // Event New
+            "da375f93-6cef-ef11-9342-6045bdd069cd", // Event Existing
+            "161e1393-6cef-ef11-9341-6045bdd1de21", // Enhancement
+            "4f352498-6cef-ef11-9341-6045bdd10c2d", // Enhanced Product Development
+            "0d1e1393-6cef-ef11-9341-6045bdd1de21", // EDR Referral
+            "4b352498-6cef-ef11-9341-6045bdd10c2d", // Dual-Use/ Controlled goods Advice
+            "061e1393-6cef-ef11-9341-6045bdd1de21", // DP/SDN Funds in Customer Account
+            "211e1393-6cef-ef11-9341-6045bdd1de21", // Document Review
+            "d7bb24c4-11f0-ef11-9341-6045bdd10c2d", // Disclosure Decisioning Escalations
+            "59352498-6cef-ef11-9341-6045bdd10c2d", // Correspondant Bank Due Diligence
+            "1e1e1393-6cef-ef11-9341-6045bdd1de21", // Control not Implemented
+            "2c352498-6cef-ef11-9341-6045bdd10c2d", // CDM/Reputational Risk Paper
+            "051e1393-6cef-ef11-9341-6045bdd1de21", // CDM Risk Rating Annual/new
+            "75312792-6cef-ef11-9341-6045bdd10c2d", // CDD Referral
+            "2352c4c1-11f0-ef11-9342-6045bdd069cd", // AQSS Guidance Support, this one, Tab AQSS_Guidance_Support_Tab
+            "cf375f93-6cef-ef11-9342-6045bdd069cd", // AML/DAML/IMLSR/SAR with Sanctions Nexus
+            "181e1393-6cef-ef11-9341-6045bdd1de21", // Amendment
+            "38b61997-6cef-ef11-9342-000d3a7f76f1", // Addition
+            "1d1e1393-6cef-ef11-9341-6045bdd1de21"  // Acceptance Clause
+        ]);
+    
+        // 2. Keep Open Requests Tab
+        setTabVisibility("noloo_keep_open_requests_tab", ["cd3647c1-11f0-ef11-9342-000d3a7f76f1"]); // Keep Open Requests
+    
+        // 3. Freeze Requests Tab
+        setTabVisibility("noloo_freeze_requests_tab", ["d33647c1-11f0-ef11-9342-000d3a7f76f1"]); // Freeze Requests
+    
+        // 4. High Risk FCLOR Tab
+        setTabVisibility("High_Risk_FCLOR_Tab", ["cc3647c1-11f0-ef11-9342-000d3a7f76f1"]); // High Risk Financial Crime Legal Order Referals NL
+    
+        // 5. Accreditation Monitoring Tab
+        setTabVisibility("Accreditation_Monitoring_Tab", ["fcc115c5-11f0-ef11-9341-6045bdcff2fd"]); // Quality Assurance Escalations
+    
+        // 6. Waivers Tab
+        setTabVisibility("waivers_tab", ["b2c95a88-d262-ef11-a670-6045bdf1a1b5"]); // Waivers (other)
+    
+        // 7. Waiver OSV Tab
+        setTabVisibility("waiver_osv_tab", ["4d90988e-d262-ef11-a670-6045bdf1a1b5"]); // Waiver (open Source Verification)
+    
+        // 8. Tipping Off Issues Tab
+        setTabVisibility("Tipping_Off_Issues_Tab", ["d6bb24c4-11f0-ef11-9341-6045bdd10c2d"]); // Tipping off Issues
+    
+        // 9. Temporary NO Escalations Tab
+        setTabVisibility("Temporary_NO_Escalations_Tab", ["dcbb24c4-11f0-ef11-9341-6045bdd10c2d"]); // Temporary no Escalation
+    
+        // 10. Financial Crime Sanctions Tab
+        setTabVisibility("Financial Crime Sanctions Tab", [
+            "Of515b2f-d362-ef11-a670-6045bdf1a1b5", // Sanctions Clauses
+            "f55218bf-d362-ef11-a670-6045bdf1a1b5", // Sanctions Circumvention
+            "093045b2-d362-ef11-a670-6045bdf1a1b5", // Sanctions Person/entity/country which is not in breach
+            "d45705ac-d362-et11-a670-6045bdt1a1b5", // Sanctions Person/Entity/Country which is a breach
+            "1adbd74f-d362-ef11-a670-6045bdf1a1b5"  // Sanctioned Country or Restricted Goods
+        ]);
+    
+        // 11. Deferment PPC Tab
+        setTabVisibility("Deferment_PPC_Tab", ["fefc3b9b-d262-ef11-a670-6045bdf1a1b5"]); // Deferment (pre and post completion)
+    
+        // 12. Deferment OCO Tab
+        setTabVisibility("Deferment_OCO_Tab", ["177b0674-db70-ef11-a671-6045bdfbc5e9"]); // Deferment (Other CDD Outstanding)
+    
+        // 13. Deferment NIC Tab
+        setTabVisibility("Deferment_NIC_Tab", ["e5be09ae-d262-ef11-a670-6045bdf1a1b5"]); // Deferment (Northern Ireland Charity)
+    
+        // 14. Deferment Licence Tab
+        setTabVisibility("deferment_licence_tab", ["997000c6-d262-ef11-a670-6045bdf1a1b5"]); // Deferment (Licence)
+    
+        // 15. Deferment CC Tab
+        setTabVisibility("Deferment_CC_Tab", ["37ae0ca8-d262-ef11-a670-6045bdf1a1b5"]); // Deferment (Charity Commission)
+    },
+
+    toggleEscalationCheckBox: async function (executionContext){
+        var parentId = executionContext.data.entity.getId().replace("}", "").replace("{", "");
+        var reviewCheckBox = executionContext.getAttribute("nwb_isreviewrequired").getValue();
+        var escalationCheckBox = executionContext.getControl("nwb_caseescalationrequired");
+        var count = await Xrm.WebApi.retrieveRecord("incident", parentId, "?$select=nwb_childcasecount");
+        if (reviewCheckBox == true && count.nwb_childcasecount < 4){
+            escalationCheckBox.setVisible(true);
+        }
+        else{
+            executionContext.getAttribute("nwb_caseescalationrequired").setValue(false);
+          //  executionContext.getAttribute("nwb_caseescalationrequired").setSubmitMode("always");
+            escalationCheckBox.setVisible(false);
+            
+        }
+    }
+    }
