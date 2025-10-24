@@ -1,0 +1,5 @@
+// 2. Investigation Escalation Tab
+        setTabVisibility("Investigation_Escalation_Tab", ["ddbb24c4-11f0-ef11-9341-6045bdd10c2d"]); // Investigation Escalation
+        
+        // 3. AQSS Guidance Support Tab
+        setTabVisibility("AQSS_Guidance_Support_Tab", ["2352c4c1-11f0-ef11-9342-6045bdd069cd"]); // AQSS Guidance Support
