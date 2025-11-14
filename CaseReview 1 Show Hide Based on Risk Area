@@ -1,0 +1,33 @@
+// Runs on form load
+function onCaseChange(executionContext) {
+    var formContext = executionContext.getFormContext();
+    var caseLookup = formContext.getAttribute("nwb_incident").getValue();
+    
+    // Get Case ID and type
+    var caseId = caseLookup[0].id.replace(/[{}]/g, "");
+    var caseEntityName = caseLookup[0].entityType;
+
+    // Fetch Risk Area GUID
+    Xrm.WebApi.retrieveRecord(caseEntityName, caseId, "?$select=_nwb_riskarea_value").then(
+        function success(result) {
+            
+            // Get Risk Area GUID
+            var riskAreaGuid = result["_nwb_riskarea_value"]; 
+            
+            // GUID for "FC Hub Sanctions Advisory"
+            var fcHubGuid = "477db7bc-6aef-ef11-9342-000d3a7f76f1"; 
+
+            // Compare GUIDs
+            if (riskAreaGuid == fcHubGuid) { 
+                formContext.getControl("nwb_actionstaken").setVisible(true);
+            } else {
+                formContext.getControl("nwb_actionstaken").setVisible(false);
+            }
+        },
+        function (error) {
+            // Error handling
+            console.log(error.message);
+            formContext.getControl("nwb_actionstaken").setVisible(false);
+        }
+    );
+}
