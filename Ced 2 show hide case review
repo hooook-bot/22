@@ -1,0 +1,43 @@
+// Runs on form load
+function onCaseChange(executionContext) {
+    var formContext = executionContext.getFormContext();
+    
+    // Get Case lookup
+    var caseLookup = formContext.getAttribute("nwb_incident").getValue();
+
+    // Check if Case empty
+    if (caseLookup == null) {
+        formContext.getControl("nwb_actionstaken").setVisible(false);
+        return; 
+    }
+    
+    // Get Case ID
+    var caseId = caseLookup[0].id.replace(/[{}]/g, "");
+    var caseEntityName = caseLookup[0].entityType;
+
+    // Fetch Risk Area
+    Xrm.WebApi.retrieveRecord(caseEntityName, caseId, "?$select=_nwb_riskarea_value").then(
+        function success(result) {
+            
+            // Get Risk Area GUID
+            var riskAreaGuid = result["_nwb_riskarea_value"]; 
+            
+            // Target GUID
+            var fcHubGuid = "477db7bc-6aef-ef11-9342-000d3a7f76f1"; 
+
+            // Compare GUIDs
+            if (riskAreaGuid && riskAreaGuid.toLowerCase() == fcHubGuid.toLowerCase()) { 
+                // Match: Hide field
+                formContext.getControl("nwb_actionstaken").setVisible(false);
+            } else {
+                // No match: Show field
+                formContext.getControl("nwb_actionstaken").setVisible(true);
+            }
+        },
+        function (error) {
+            // Handle error
+            console.log(error.message);
+            formContext.getControl("nwb_actionstaken").setVisible(true);
+        }
+    );
+}
